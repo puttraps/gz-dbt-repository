@@ -6,7 +6,26 @@ sources:
     tables:
       - name: sales
         identifier: raw_gz_sales
+        description: sales of Greenweez which has row per product_id found on orders_id
+        loaded_at_field: "CAST (date_date AS TIMESTAMP)"
+        freshness: 
+          warn_after: {count: 90, period: day} 
+        columns:
+          - name: date_date
       - name: product
         identifier: raw_gz_product
+        description: product information of Greenweez
+        columns:
+          - name: products_id
+            tests:
+              - unique
+              - not_null
       - name: ship
         identifier: raw_gz_ship
+        description: shipping information and cost of Greenweez
+        columns:
+          - name: orders_id
+            tests:
+              - unique
+              - not_null
+                
