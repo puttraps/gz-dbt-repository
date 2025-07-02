@@ -47,9 +47,69 @@ sources:
 
 models:
    # Staging #
-   # ...snip...
+   # see above
 
    # Intermediate #
+   - name: int_campaigns
+     description: campaigns merged between criteo, facebook, adwords, bing
+     columns:
+       - name: date_date
+         description: date
+         tests:
+           - not_null
+       - name: campaign_key
+         description: campaign key
+         tests:
+           - not_null
+       - name: paid_source
+         description: campaign source platform
+         tests:
+           - not_null
+       - name: campaign_name
+         description: name of campaign
+         tests:
+           - not_null
+       - name: ads_cost
+         description: cost of ads
+         tests:
+           - not_null
+       - name: impression
+         description: how many people see the ads
+         tests:
+           - not_null
+       - name: click
+         description: how many click on ads
+         tests:
+           - not_null
+     tests:
+       - dbt_utils.unique_combination_of_columns:
+          combination_of_columns:
+            - campaign_key
+            - date_date
+
+   - name: int_campaigns_day
+     description: campaigns merged between criteo, facebook, adwords, bing aggregated per-day
+     columns:
+       - name: date_date
+         description: date
+         tests:
+           - not_null
+           - unique
+       - name: ads_cost
+         description: cost of total ads
+         tests:
+           - not_null
+       - name: ads_impression
+         description: how many people see the ads in total
+         tests:
+           - not_null
+           - unique
+       - name: ads_click
+         description: how many click on ads in total
+         tests:
+           - not_null
+
+
    - name: int_orders_margin
      description: margin calculation per order
      columns:
