@@ -1,0 +1,18 @@
+select
+    o.date_date,
+    o.orders_id,
+    o.revenue,
+    o.quantity,
+    o.purchase_cost,
+    sh.shipping_fee,
+    sh.log_cost,
+    o.margin,
+    ROUND (o.margin + sh.shipping_fee - (sh.log_cost - sh.ship_cost),2) as operational_margin,
+    sh.ship_cost
+FROM {{ref("int_orders_margin")}} as o
+LEFT JOIN {{ref("stg_raw__ship")}} as sh
+    USING (orders_id)
+
+
+ 
+
