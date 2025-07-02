@@ -14,5 +14,5 @@ LEFT JOIN {{ref("stg_raw__ship")}} as sh
     USING (orders_id)
 
 
-
+ 
 
